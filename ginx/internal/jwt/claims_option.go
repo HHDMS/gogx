@@ -16,6 +16,9 @@ type Options struct {
 	genIDFn       func() string     // 生成 JWT ID 的函数
 }
 
+// NewOptions 定义一个 JWT 配置.
+// DecryptKey: 默认与 EncryptionKey 相同.
+// Method: 默认使用 jwt.SigningMethodHS256 签名方式.
 func NewOptions(expire time.Duration, encryptKey string,
 	opts ...option.Option[Options]) Options {
 	dOpts := Options{
@@ -31,28 +34,28 @@ func NewOptions(expire time.Duration, encryptKey string,
 	return dOpts
 }
 
-// WithDecryptKey 设置解密密匙
+// WithDecryptKey 设置解密密匙.
 func WithDecryptKey(decryptKey string) option.Option[Options] {
 	return func(o *Options) {
 		o.DecryptKey = decryptKey
 	}
 }
 
-// WithMethod 设置 JWT 签名方式
+// WithMethod 设置 JWT 签名方式.
 func WithMethod(method jwt.SigningMethod) option.Option[Options] {
 	return func(o *Options) {
 		o.Method = method
 	}
 }
 
-// WithIssuer 设置签发人
+// WithIssuer 设置签发人.
 func WithIssuer(issuer string) option.Option[Options] {
 	return func(o *Options) {
 		o.Issuer = issuer
 	}
 }
 
-// WithGenIDFunc 设置生成 JWT ID 函数
+// WithGenIDFunc 设置生成 JWT ID 函数.
 func WithGenIDFunc(fn func() string) option.Option[Options] {
 	return func(o *Options) {
 		o.genIDFn = fn
